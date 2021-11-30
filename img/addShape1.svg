@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128.0px"
+   height="128.0px"
+   viewBox="0 0 128.0 128.0"
+   version="1.1"
+   id="SVGRoot"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs16">
+    <linearGradient
+       id="linearGradient3231">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3229" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1263">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1261" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient1257">
+      <stop
+         style="stop-color:#ff0000;stop-opacity:1;"
+         offset="0"
+         id="stop1255" />
+    </linearGradient>
+  </defs>
+  <g
+     id="layer1">
+    <circle
+       style="fill:#00ffff;fill-rule:evenodd;stroke-width:5.049;fill-opacity:1;stroke:#ffffff;stroke-opacity:1;opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path302"
+       cx="64.121765"
+       cy="62.257744"
+       r="59.28159" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.609px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.815224"
+       x="33.689247"
+       y="57.014538"
+       id="text16424"><tspan
+         id="tspan16422"
+         x="33.689247"
+         y="57.014538"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.609px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0.815224">Add</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.0489px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.776225"
+       x="15.284609"
+       y="86.522995"
+       id="text18264"><tspan
+         id="tspan18262"
+         x="15.284609"
+         y="86.522995"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:31.0489px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0.776225">Shape</tspan></text>
+  </g>
+</svg>
