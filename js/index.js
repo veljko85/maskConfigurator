@@ -19,8 +19,55 @@ var createDefaultEngine = function () {
     disableWebGL2Support: false,
   });
 };
+//for loading
+BABYLON.DefaultLoadingScreen.prototype.displayLoadingUI = function () {
+  if (document.getElementById("customLoadingScreenDiv")) {
+    // Do not add a loading screen if there is already one
+    document.getElementById("customLoadingScreenDiv").style.display = "initial";
+    return;
+  }
+  this._loadingDiv = document.createElement("div");
+  this._loadingDiv.id = "customLoadingScreenDiv";
+  this._loadingDiv.innerHTML = `<div id="lottieWraper" style: width: 200px; height: 200px; background-color: red;></div>`;
+  let animItem = bodymovin.loadAnimation({
+    wrapper: this._loadingDiv,
+    animType: "svg",
+    loop: true,
+    // rendererSettings: {
+    //   progressiveLoad: false,
+    //   preserveAspectRatio: "xMidYMid meet",
+    //   viewBoxSize: "10 10 10 10",
+    // },
+    path: "https://raw.githubusercontent.com/thesvbd/Lottie-examples/master/assets/animations/loading.json",
+  });
+  animItem.resize();
+  var customLoadingScreenCss = document.createElement("style");
+  customLoadingScreenCss.type = "text/css";
+  customLoadingScreenCss.innerHTML = `
+                #customLoadingScreenDiv{
+                  max-width: 50px;
+                max-height: 50px;
+                    z-index: 20;
+                    position: fixed;
+                    margin-left: calc(25% - 25px);
+                    margin-top: calc(25% - 25px);
+                }
+                 `;
 
+  document.getElementsByTagName("head")[0].appendChild(customLoadingScreenCss);
+  this._resizeLoadingUI();
+  window.addEventListener("resize", this._resizeLoadingUI);
+  document.body.appendChild(this._loadingDiv);
+};
+
+BABYLON.DefaultLoadingScreen.prototype.hideLoadingUI = function () {
+  document.getElementById("customLoadingScreenDiv").style.display = "none";
+  // console.log("scene is now loaded");
+};
+//end of loading
 var createScene = function () {
+  //loading
+  engine.displayLoadingUI();
   var scene = new BABYLON.Scene(engine);
 
   //scene colors - first color, second transperent
@@ -385,7 +432,27 @@ var createScene = function () {
       "textures/normalBack.png",
       scene
     );
+    for (var i = 0; i < result.meshes.length; i++) {
+      result.meshes[i].visibility = 0;
+    }
+
+    //for loading
+
+    engine.hideLoadingUI();
+
     // scene.getMaterialByID("Mask").albedoColor = new BABYLON.Color3(1, 0, 0);
+    for (var i = 0; i < result.meshes.length; i++) {
+      BABYLON.Animation.CreateAndStartAnimation(
+        "fademesh",
+        result.meshes[i],
+        "visibility",
+        30,
+        30,
+        0,
+        1,
+        0
+      );
+    }
   });
 
   // console.log(scene.getMeshByName("Mask").material);
