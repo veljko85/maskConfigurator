@@ -392,6 +392,16 @@ var createScene = function () {
   }
   lintenKeysEvents();
 
+  //function to discard active objects
+  function discardActvObj() {
+    fabricCanvas.discardActiveObject();
+    fabricCanvas.renderAll();
+  }
+
+  canvas.onclick = () => {
+    discardActvObj();
+  };
+
   //CREATE DYNAMIC MATERIAL
 
   var groundTexture = new BABYLON.DynamicTexture(
@@ -432,31 +442,52 @@ var createScene = function () {
       "textures/normalBack.png",
       scene
     );
-    // for (var i = 0; i < result.meshes.length; i++) {
-    //   result.meshes[0].visibility = 0;
-    //   result.meshes[1].visibility = 0;
-    // }
 
     //for loading
-
     engine.hideLoadingUI();
-
-    // scene.getMaterialByID("Mask").albedoColor = new BABYLON.Color3(1, 0, 0);
-    // for (var i = 0; i < result.meshes.length; i++) {
-    //   BABYLON.Animation.CreateAndStartAnimation(
-    //     "fademesh",
-    //     result.meshes[i],
-    //     "visibility",
-    //     10,
-    //     10,
-    //     0,
-    //     1,
-    //     0
-    //   );
-    // }
   });
 
-  // console.log(scene.getMeshByName("Mask").material);
+  //FACE MESH
+  var faceMesh = BABYLON.SceneLoader.ImportMeshAsync(
+    "",
+    "https://raw.githubusercontent.com/veljko85/glbModels/gh-pages/face/",
+    "face.glb"
+  ).then((result) => {
+    var face = result.meshes[0];
+    face.scaling = new BABYLON.Vector3(6.9, 6.9, 6.9);
+    face.rotationQuaternion = null;
+    face.position.y = 6;
+    face.position.z = -3.4;
+    for (let i = 0; i < result.meshes.length; i++) {
+      result.meshes[i].isVisible = false;
+    }
+
+    var faceOn = false;
+    document.getElementById("addFaceBut").onclick = () => {
+      if (!faceOn) {
+        document.getElementById("addFaceButTitle").innerHTML = "Remove Face";
+        faceOn = true;
+        for (let i = 0; i < result.meshes.length; i++) {
+          result.meshes[i].isVisible = true;
+        }
+      } else {
+        document.getElementById("addFaceButTitle").innerHTML = "Add Face";
+        faceOn = false;
+        for (let i = 0; i < result.meshes.length; i++) {
+          result.meshes[i].isVisible = false;
+        }
+      }
+    };
+  });
+
+  //screenshot of product
+
+  document.getElementById("screenshotBut").onclick = () => {
+    discardActvObj();
+    setTimeout(function () {
+      BABYLON.Tools.CreateScreenshot(engine, camera, 2048);
+    }, 1000);
+  };
 
   fabricCanvas.renderAll();
   groundTexture.update(false);
@@ -538,6 +569,28 @@ var createScene = function () {
     canvas.removeEventListener("pointermove", onPointer);
   };
 
+  //download pdf
+  var download = document.getElementById("download");
+
+  download.onclick = () => {
+    discardActvObj();
+
+    setTimeout(function () {
+      html2canvas(document.getElementById("paintCanvas"), {
+        onrendered: function (fabricCanvas) {
+          var img = fabricCanvas.toDataURL("image/jpeg,1.0");
+          // pdf.output("datauri");
+          var imgData = new Image();
+          imgData.src = "./img/Maska_linije.png";
+          var pdf = new jsPDF("l", "mm", [300, 150]);
+          pdf.addImage(img, "PNG", 0, 0, 300, 150);
+          pdf.addImage(imgData, "PNG", 0, 0, 300, 150);
+          pdf.save("Mask Configurator.pdf");
+        },
+      });
+    }, 1000);
+  };
+
   //END OF SCENE
   return scene;
 };
@@ -571,21 +624,3 @@ initFunction().then(() => {
 window.addEventListener("resize", function () {
   engine.resize();
 });
-
-var download = document.getElementById("download");
-// setInterval(function () {
-download.onclick = () => {
-  html2canvas(document.getElementById("paintCanvas"), {
-    onrendered: function (fabricCanvas) {
-      var img = fabricCanvas.toDataURL("image/jpeg,1.0");
-      // pdf.output("datauri");
-      var imgData = new Image();
-      imgData.src = "./img/Maska_linije.png";
-      var pdf = new jsPDF("l", "mm", [300, 150]);
-      pdf.addImage(img, "PNG", 0, 0, 300, 150);
-      pdf.addImage(imgData, "PNG", 0, 0, 300, 150);
-      pdf.save("Mask Configurator.pdf");
-    },
-  });
-  // }, 2000);
-};

@@ -80,6 +80,7 @@ body {
   color: #000000;
   border: 3px solid rgb(0, 0, 0);
   transition: 0.5s;
+  text-align: center;
 }
 .conf-button:hover,
 .download:hover {

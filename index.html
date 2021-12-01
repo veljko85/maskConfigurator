@@ -107,7 +107,7 @@
           style="
             background: url('img/Maska_linije.png');
             background-size: cover;
-            box-shadow: 5px 10px 80px 10px #888888;
+            box-shadow: 5px 10px 80px 10px #a5a5a5;
           "
         ></canvas>
 
@@ -179,6 +179,27 @@
       </div>
 
       <canvas id="renderCanvasBox" class="render-canvas-box"></canvas>
+      <div
+        class="babylonButtons"
+        style="
+          width: 50%;
+          position: fixed;
+          bottom: 50px;
+          left: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          z-index: 300;
+        "
+      >
+        <div class="conf-button" id="screenshotBut">
+          <h5>Screenshot Mask</h5>
+        </div>
+        <div class="conf-button" id="addFaceBut">
+          <h5 id="addFaceButTitle">Add Face</h5>
+        </div>
+      </div>
     </div>
     <script src="https://raw.githack.com/easylogic/colorpicker/main/dist/EasyLogicColorPicker.js"></script>
     <script src="js/index.js"></script>
