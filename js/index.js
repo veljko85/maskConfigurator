@@ -432,27 +432,28 @@ var createScene = function () {
       "textures/normalBack.png",
       scene
     );
-    for (var i = 0; i < result.meshes.length; i++) {
-      result.meshes[i].visibility = 0;
-    }
+    // for (var i = 0; i < result.meshes.length; i++) {
+    //   result.meshes[0].visibility = 0;
+    //   result.meshes[1].visibility = 0;
+    // }
 
     //for loading
 
     engine.hideLoadingUI();
 
     // scene.getMaterialByID("Mask").albedoColor = new BABYLON.Color3(1, 0, 0);
-    for (var i = 0; i < result.meshes.length; i++) {
-      BABYLON.Animation.CreateAndStartAnimation(
-        "fademesh",
-        result.meshes[i],
-        "visibility",
-        30,
-        30,
-        0,
-        1,
-        0
-      );
-    }
+    // for (var i = 0; i < result.meshes.length; i++) {
+    //   BABYLON.Animation.CreateAndStartAnimation(
+    //     "fademesh",
+    //     result.meshes[i],
+    //     "visibility",
+    //     10,
+    //     10,
+    //     0,
+    //     1,
+    //     0
+    //   );
+    // }
   });
 
   // console.log(scene.getMeshByName("Mask").material);
