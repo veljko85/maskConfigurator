@@ -271,6 +271,8 @@ var createScene = function () {
       fabricCanvas.getActiveObject() != undefined ||
       fabricCanvas.getActiveObject() != null
     ) {
+      document.getElementById("bringForward").style.visibility = "visible";
+      document.getElementById("sendBackwards").style.visibility = "visible";
       if (
         fabricCanvas.getActiveObject().type === "rect" ||
         fabricCanvas.getActiveObject().type === "circle" ||
@@ -283,6 +285,8 @@ var createScene = function () {
     } else {
       document.getElementById("shapeColor").style.display = "none";
       document.getElementById("pickerForShape").style.display = "none";
+      document.getElementById("bringForward").style.visibility = "hidden";
+      document.getElementById("sendBackwards").style.visibility = "hidden";
       pickerForShapeOpen = false;
     }
   };
@@ -321,7 +325,8 @@ var createScene = function () {
   function addText() {
     text = new fabric.IText("Click to edit text", {
       fontSize: 25,
-      fontFamily: "Arial",
+      fontWeight: "bold",
+      fontFamily: "Barlow",
       // stroke: "#FF0000",
       angle: 25,
       fill: "#000000",
@@ -335,6 +340,7 @@ var createScene = function () {
     });
     fabricCanvas.add(text);
   }
+
   document.getElementById("addText").onclick = () => {
     document.getElementById("picker").style.display = "none";
     pickerOpen = false;
@@ -370,17 +376,16 @@ var createScene = function () {
       };
     };
     reader.readAsDataURL(e.target.files[0]);
-    console.log(e.target.files[0].Width);
   };
 
-  // fabric.Image.fromURL("img/logoQuince.png", function (myImg) {
-  //   //i create an extra var for to change some image properties
-  //   var img1 = myImg.set({ left: 0, top: 200, width: 200, height: 75 });
-  //   fabricCanvas.add(img1);
-  // });
-
-  // fabricCanvas.moveTo(fabricCanvas.getObjects()[0], 10);
-  // console.log(fabricCanvas.getObjects().indexOf(img1));
+  // fabricCanvas.sendToBack(myObject)
+  // fabricCanvas.bringToFront(myObject)
+  document.getElementById("bringForward").onclick = () => {
+    fabricCanvas.bringForward(fabricCanvas.getActiveObject());
+  };
+  document.getElementById("sendBackwards").onclick = () => {
+    fabricCanvas.sendBackwards(fabricCanvas.getActiveObject());
+  };
 
   function lintenKeysEvents() {
     document.onkeydown = checkKey;
@@ -426,7 +431,7 @@ var createScene = function () {
   BABYLON.SceneLoader.ImportMeshAsync(
     "",
     "https://raw.githubusercontent.com/veljko85/glbModels/gh-pages/faceMask/",
-    "maskFrontBack3.glb"
+    "maska.glb"
   ).then((result) => {
     var mask = result.meshes[0];
     // mask.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5);
@@ -442,42 +447,52 @@ var createScene = function () {
       "textures/normalBack.png",
       scene
     );
+    scene.getMeshByName("StrapsShort.001").isVisible = false;
+
+    //FACE MESH
+    BABYLON.SceneLoader.ImportMeshAsync(
+      "",
+      "https://raw.githubusercontent.com/veljko85/glbModels/gh-pages/face/",
+      "Glava.glb"
+    ).then((result) => {
+      var face = result.meshes[0];
+      // face.scaling = new BABYLON.Vector3(6.9, 6.9, 6.9);
+      // face.rotationQuaternion = null;
+      face.position.y = -1;
+      face.position.z = 5;
+      for (let i = 0; i < result.meshes.length; i++) {
+        result.meshes[i].isVisible = false;
+      }
+
+      //head-face
+      var faceOn = false;
+      document.getElementById("addFaceBut").onclick = () => {
+        if (!faceOn) {
+          document.getElementById("addFaceButTitle").innerHTML = "Remove Face";
+          scene.getMeshByName("StrapsShort.001").isVisible = true;
+          scene.getMeshByName("StrapsShort.002").isVisible = false;
+          camera.upperBetaLimit = 1.6;
+          camera.lowerRadiusLimit = 20;
+          faceOn = true;
+          for (let i = 0; i < result.meshes.length; i++) {
+            result.meshes[i].isVisible = true;
+          }
+        } else {
+          document.getElementById("addFaceButTitle").innerHTML = "Add Face";
+          scene.getMeshByName("StrapsShort.001").isVisible = false;
+          scene.getMeshByName("StrapsShort.002").isVisible = true;
+          camera.upperBetaLimit = 3.14;
+          camera.lowerRadiusLimit = 10;
+          faceOn = false;
+          for (let i = 0; i < result.meshes.length; i++) {
+            result.meshes[i].isVisible = false;
+          }
+        }
+      };
+    });
 
     //for loading
     engine.hideLoadingUI();
-  });
-
-  //FACE MESH
-  var faceMesh = BABYLON.SceneLoader.ImportMeshAsync(
-    "",
-    "https://raw.githubusercontent.com/veljko85/glbModels/gh-pages/face/",
-    "face.glb"
-  ).then((result) => {
-    var face = result.meshes[0];
-    face.scaling = new BABYLON.Vector3(6.9, 6.9, 6.9);
-    face.rotationQuaternion = null;
-    face.position.y = 6;
-    face.position.z = -3.4;
-    for (let i = 0; i < result.meshes.length; i++) {
-      result.meshes[i].isVisible = false;
-    }
-
-    var faceOn = false;
-    document.getElementById("addFaceBut").onclick = () => {
-      if (!faceOn) {
-        document.getElementById("addFaceButTitle").innerHTML = "Remove Face";
-        faceOn = true;
-        for (let i = 0; i < result.meshes.length; i++) {
-          result.meshes[i].isVisible = true;
-        }
-      } else {
-        document.getElementById("addFaceButTitle").innerHTML = "Add Face";
-        faceOn = false;
-        for (let i = 0; i < result.meshes.length; i++) {
-          result.meshes[i].isVisible = false;
-        }
-      }
-    };
   });
 
   //screenshot of product
@@ -572,6 +587,11 @@ var createScene = function () {
   //download pdf
   var download = document.getElementById("download");
 
+  var formats = {
+    a4: [300, 150],
+    a3: [400, 200],
+  };
+
   download.onclick = () => {
     discardActvObj();
 
@@ -582,7 +602,7 @@ var createScene = function () {
           // pdf.output("datauri");
           var imgData = new Image();
           imgData.src = "./img/Maska_linije.png";
-          var pdf = new jsPDF("l", "mm", [300, 150]);
+          var pdf = new jsPDF("l", "mm", formats.a4);
           pdf.addImage(img, "PNG", 0, 0, 300, 150);
           pdf.addImage(imgData, "PNG", 0, 0, 300, 150);
           pdf.save("Mask Configurator.pdf");

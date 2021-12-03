@@ -60,9 +60,17 @@ body {
   z-index: 100;
   display: none;
 }
+.upperConfButtons {
+  width: 30%;
+  display: flex;
+  left: 20%;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 200;
+}
 .confButtons {
   width: 50%;
-  position: fixed;
   bottom: 50px;
   display: flex;
   align-items: center;
