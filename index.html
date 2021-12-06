@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>Mask Configurator</title>
@@ -45,6 +47,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
+
   <body>
     <div class="container-box">
       <div class="header">
@@ -55,45 +58,13 @@
       </div>
 
       <div class="conf-cont" id="conf-cont">
-        <div
-          id="pickerBackground"
-          style="
-            width: 60%;
-            height: 100%;
-            float: left;
-            position: absolute;
-            display: none;
-            z-index: 90;
-          "
-        ></div>
+        <div id="pickerBackground" class="pickerBackground"></div>
 
-        <div
-          id="shapeColor"
-          style="
-            width: 200px;
-            height: 50px;
-            margin-left: 150px;
-            float: left;
-            display: none;
-            position: absolute;
-            z-index: 1000;
-          "
-        >
+        <div id="shapeColor" class="shapeColor">
           <h2 style="font: 900 20px arial; float: left; margin-top: 12.5px">
             Shape Color:
           </h2>
-          <div
-            id="colorOfShape"
-            style="
-              width: 30px;
-              height: 30px;
-              margin: 10px 10px;
-              border-radius: 50%;
-              background-color: red;
-              float: left;
-              cursor: pointer;
-            "
-          ></div>
+          <div id="colorOfShape" class="colorOfShape"></div>
         </div>
 
         <div class="upperConfButtons">
@@ -116,14 +87,7 @@
 
         <div class="colorPicker" id="pickerForShape"></div>
 
-        <canvas
-          id="paintCanvas"
-          style="
-            background: url('img/Maska_linije.png');
-            background-size: cover;
-            box-shadow: 5px 10px 80px 10px #a5a5a5;
-          "
-        ></canvas>
+        <canvas id="paintCanvas" class="paintCanvas"></canvas>
 
         <div class="confButtons" id="confButtons">
           <div class="pick-color conf-button" id="pickColor">
@@ -136,40 +100,9 @@
           <div class="conf-button" id="addShape">
             <h5>Add Shape</h5>
           </div>
-          <div
-            id="chooseShape"
-            style="
-              width: 150px;
-              display: none;
-              position: absolute;
-              left: calc(50% + 30px);
-              bottom: 70px;
-              z-index: 100;
-            "
-          >
-            <div
-              id="addRect"
-              style="
-                width: 60px;
-                height: 60px;
-                float: left;
-                background-image: url('img/addRect.svg');
-                background-size: cover;
-                cursor: pointer;
-              "
-            ></div>
-            <div
-              id="addCircle"
-              style="
-                width: 60px;
-                height: 60px;
-                float: left;
-                background-image: url('img/addCircle.svg');
-                background-size: cover;
-                cursor: pointer;
-                /* margin-left: 10px; */
-              "
-            ></div>
+          <div id="chooseShape" class="chooseShape">
+            <div id="addRect" class="addRect"></div>
+            <div id="addCircle" class="addCircle"></div>
           </div>
           <div id="uploadImage">
             <form class="upload" id="upload">
@@ -193,20 +126,7 @@
       </div>
 
       <canvas id="renderCanvasBox" class="render-canvas-box"></canvas>
-      <div
-        class="babylonButtons"
-        style="
-          width: 50%;
-          position: fixed;
-          bottom: 50px;
-          left: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: absolute;
-          z-index: 300;
-        "
-      >
+      <div class="babylonButtons">
         <div class="conf-button" id="screenshotBut">
           <h5>Screenshot Mask</h5>
         </div>

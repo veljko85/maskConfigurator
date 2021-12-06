@@ -464,7 +464,7 @@ var createScene = function () {
         result.meshes[i].isVisible = false;
       }
 
-      //head-face
+      //head-face toggle
       var faceOn = false;
       document.getElementById("addFaceBut").onclick = () => {
         if (!faceOn) {

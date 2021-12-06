@@ -34,6 +34,32 @@ body {
   height: calc(100% - 100px);
   background-color: rgb(212, 212, 212);
 }
+.pickerBackground {
+  width: 60%;
+  height: 100%;
+  float: left;
+  position: absolute;
+  display: none;
+  z-index: 90;
+}
+.shapeColor {
+  width: 200px;
+  height: 50px;
+  margin-left: 150px;
+  float: left;
+  display: none;
+  position: absolute;
+  z-index: 1000;
+}
+.colorOfShape {
+  width: 30px;
+  height: 30px;
+  margin: 10px 10px;
+  border-radius: 50%;
+  background-color: red;
+  float: left;
+  cursor: pointer;
+}
 .conf-cont {
   width: 50%;
   height: 100%;
@@ -96,9 +122,38 @@ body {
   color: #ffffff;
   /* border: 5px solid rgb(255, 255, 255); */
 }
+.chooseShape {
+  width: 150px;
+  display: none;
+  position: absolute;
+  left: calc(50% + 30px);
+  bottom: 70px;
+  z-index: 100;
+}
+.addRect {
+  width: 60px;
+  height: 60px;
+  float: left;
+  background-image: url("../img/addRect.svg");
+  background-size: cover;
+  cursor: pointer;
+}
+.addCircle {
+  width: 60px;
+  height: 60px;
+  float: left;
+  background-image: url("../img/addCircle.svg");
+  background-size: cover;
+  cursor: pointer;
+}
 h5 {
   font: 900 15px "Barlow", sans-serif;
   padding-top: 10px;
+}
+.paintCanvas {
+  background: url("../img/Maska_linije.png");
+  background-size: cover;
+  box-shadow: 5px 10px 80px 10px #a5a5a5;
 }
 .render-canvas-box {
   width: 50%;
@@ -109,5 +164,14 @@ h5 {
   outline: none !important;
   float: right;
 }
-
-/*# sourceMappingURL=main.bd75c0f3.css.map*/
+.babylonButtons {
+  width: 50%;
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 300;
+}
