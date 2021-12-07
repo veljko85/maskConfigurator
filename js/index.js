@@ -392,6 +392,11 @@ var createScene = function () {
     function checkKey(event) {
       if (event.keyCode == 46) {
         fabricCanvas.remove(fabricCanvas.getActiveObject());
+        document.getElementById("shapeColor").style.display = "none";
+        document.getElementById("pickerForShape").style.display = "none";
+        document.getElementById("bringForward").style.visibility = "hidden";
+        document.getElementById("sendBackwards").style.visibility = "hidden";
+        pickerForShapeOpen = false;
       }
     }
   }
