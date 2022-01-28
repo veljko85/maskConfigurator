@@ -128,7 +128,7 @@ var createScene = function () {
     (confCont.offsetHeight - textureHeight) / 2 + "px";
 
   paintCanvas.style.marginLeft =
-    confCont.offsetWidth / 2 - textureWidth / 2 + "px";
+    (confCont.offsetWidth - textureWidth) / 2 + "px";
 
   // init fabric canvas
   var fabricCanvas = new fabric.Canvas("paintCanvas", {
@@ -136,7 +136,7 @@ var createScene = function () {
     height: textureHeight,
     backgroundColor: "#FFFFFF",
     selectionColor: "transparent",
-    selectionLineWidth: 10,
+    selectionLineWidth: 3,
     borderColor: "red",
     cornerColor: "orange",
     cornerSize: 10,
@@ -234,7 +234,6 @@ var createScene = function () {
 
   function updateColorOfShape(value) {
     colorOfShape = value;
-    console.log(colorOfShape);
     document.getElementById("colorOfShape").style.backgroundColor =
       colorOfShape;
     fabricCanvas.getActiveObject().set({
@@ -378,6 +377,7 @@ var createScene = function () {
     reader.readAsDataURL(e.target.files[0]);
   };
 
+  //bring to front or back
   // fabricCanvas.sendToBack(myObject)
   // fabricCanvas.bringToFront(myObject)
   document.getElementById("bringForward").onclick = () => {
@@ -387,6 +387,7 @@ var createScene = function () {
     fabricCanvas.sendBackwards(fabricCanvas.getActiveObject());
   };
 
+  //delete import shape img text
   function lintenKeysEvents() {
     document.onkeydown = checkKey;
     function checkKey(event) {
@@ -459,40 +460,53 @@ var createScene = function () {
       "",
       "https://raw.githubusercontent.com/veljko85/glbModels/gh-pages/face/",
       "Glava.glb"
-    ).then((result) => {
-      var face = result.meshes[0];
+    ).then((resultFace) => {
+      var face = resultFace.meshes[0];
       // face.scaling = new BABYLON.Vector3(6.9, 6.9, 6.9);
       // face.rotationQuaternion = null;
       face.position.y = -1;
       face.position.z = 5;
-      for (let i = 0; i < result.meshes.length; i++) {
-        result.meshes[i].isVisible = false;
+      for (let i = 0; i < resultFace.meshes.length; i++) {
+        resultFace.meshes[i].isVisible = false;
       }
 
       //head-face toggle
-      var faceOn = false;
+      // var faceOn = false;
+      // document.getElementById("addFaceBut").onclick = () => {
+      //   if (!faceOn) {
+      //     document.getElementById("addFaceButTitle").innerHTML = "Remove Face";
+      //     scene.getMeshByName("StrapsShort.001").isVisible = true;
+      //     scene.getMeshByName("StrapsShort.002").isVisible = false;
+      //     camera.upperBetaLimit = 1.6;
+      //     camera.lowerRadiusLimit = 20;
+      //     faceOn = true;
+      //     for (let i = 0; i < resultFace.meshes.length; i++) {
+      //       resultFace.meshes[i].isVisible = true;
+      //     }
+      //   } else {
+      //     document.getElementById("addFaceButTitle").innerHTML = "Add Face";
+      //     scene.getMeshByName("StrapsShort.001").isVisible = false;
+      //     scene.getMeshByName("StrapsShort.002").isVisible = true;
+      //     camera.upperBetaLimit = 3.14;
+      //     camera.lowerRadiusLimit = 10;
+      //     faceOn = false;
+      //     for (let i = 0; i < resultFace.meshes.length; i++) {
+      //       resultFace.meshes[i].isVisible = false;
+      //     }
+      //   }
+      // };
       document.getElementById("addFaceBut").onclick = () => {
-        if (!faceOn) {
-          document.getElementById("addFaceButTitle").innerHTML = "Remove Face";
-          scene.getMeshByName("StrapsShort.001").isVisible = true;
-          scene.getMeshByName("StrapsShort.002").isVisible = false;
-          camera.upperBetaLimit = 1.6;
-          camera.lowerRadiusLimit = 20;
-          faceOn = true;
-          for (let i = 0; i < result.meshes.length; i++) {
-            result.meshes[i].isVisible = true;
-          }
-        } else {
-          document.getElementById("addFaceButTitle").innerHTML = "Add Face";
-          scene.getMeshByName("StrapsShort.001").isVisible = false;
-          scene.getMeshByName("StrapsShort.002").isVisible = true;
-          camera.upperBetaLimit = 3.14;
-          camera.lowerRadiusLimit = 10;
-          faceOn = false;
-          for (let i = 0; i < result.meshes.length; i++) {
-            result.meshes[i].isVisible = false;
-          }
-        }
+        let options = {
+          shouldExportNode: function (node) {
+            // for (let i = 0; i < result.meshes.length; i++) {
+            //   return node !== result.meshes[i];
+            // }
+            return node == scene.getMeshByName("Mask Front.001");
+          },
+        };
+        BABYLON.GLTF2Export.GLBAsync(scene, "fileName", options).then((glb) => {
+          glb.downloadFiles();
+        });
       };
     });
 
