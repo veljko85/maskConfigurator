@@ -625,9 +625,11 @@ var createScene = function () {
       },
     };
 
-    BABYLON.GLTF2Export.GLBAsync(scene, "Mask Model", options).then((glb) => {
-      glb.downloadFiles();
-    });
+    BABYLON.GLTF2Export.GLBAsync(scene, "Mask 3D Model", options).then(
+      (glb) => {
+        glb.downloadFiles();
+      }
+    );
   };
 
   //END OF SCENE
