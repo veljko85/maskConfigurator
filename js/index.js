@@ -471,42 +471,29 @@ var createScene = function () {
       }
 
       //head-face toggle
-      // var faceOn = false;
-      // document.getElementById("addFaceBut").onclick = () => {
-      //   if (!faceOn) {
-      //     document.getElementById("addFaceButTitle").innerHTML = "Remove Face";
-      //     scene.getMeshByName("StrapsShort.001").isVisible = true;
-      //     scene.getMeshByName("StrapsShort.002").isVisible = false;
-      //     camera.upperBetaLimit = 1.6;
-      //     camera.lowerRadiusLimit = 20;
-      //     faceOn = true;
-      //     for (let i = 0; i < resultFace.meshes.length; i++) {
-      //       resultFace.meshes[i].isVisible = true;
-      //     }
-      //   } else {
-      //     document.getElementById("addFaceButTitle").innerHTML = "Add Face";
-      //     scene.getMeshByName("StrapsShort.001").isVisible = false;
-      //     scene.getMeshByName("StrapsShort.002").isVisible = true;
-      //     camera.upperBetaLimit = 3.14;
-      //     camera.lowerRadiusLimit = 10;
-      //     faceOn = false;
-      //     for (let i = 0; i < resultFace.meshes.length; i++) {
-      //       resultFace.meshes[i].isVisible = false;
-      //     }
-      //   }
-      // };
+      var faceOn = false;
       document.getElementById("addFaceBut").onclick = () => {
-        let options = {
-          shouldExportNode: function (node) {
-            // for (let i = 0; i < result.meshes.length; i++) {
-            //   return node !== result.meshes[i];
-            // }
-            return node == scene.getMeshByName("Mask Front.001");
-          },
-        };
-        BABYLON.GLTF2Export.GLBAsync(scene, "fileName", options).then((glb) => {
-          glb.downloadFiles();
-        });
+        if (!faceOn) {
+          document.getElementById("addFaceButTitle").innerHTML = "Remove Face";
+          scene.getMeshByName("StrapsShort.001").isVisible = true;
+          scene.getMeshByName("StrapsShort.002").isVisible = false;
+          camera.upperBetaLimit = 1.6;
+          camera.lowerRadiusLimit = 20;
+          faceOn = true;
+          for (let i = 0; i < resultFace.meshes.length; i++) {
+            resultFace.meshes[i].isVisible = true;
+          }
+        } else {
+          document.getElementById("addFaceButTitle").innerHTML = "Add Face";
+          scene.getMeshByName("StrapsShort.001").isVisible = false;
+          scene.getMeshByName("StrapsShort.002").isVisible = true;
+          camera.upperBetaLimit = 3.14;
+          camera.lowerRadiusLimit = 10;
+          faceOn = false;
+          for (let i = 0; i < resultFace.meshes.length; i++) {
+            resultFace.meshes[i].isVisible = false;
+          }
+        }
       };
     });
 
@@ -628,6 +615,19 @@ var createScene = function () {
         },
       });
     }, 1000);
+  };
+
+  //download 3d model
+  document.getElementById("downLoadModel").onclick = () => {
+    let options = {
+      shouldExportNode: function (node) {
+        return node.isVisible == true;
+      },
+    };
+
+    BABYLON.GLTF2Export.GLBAsync(scene, "Mask Model", options).then((glb) => {
+      glb.downloadFiles();
+    });
   };
 
   //END OF SCENE
